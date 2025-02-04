@@ -70,14 +70,37 @@ if last_month_file and curr_month_file:
     st.dataframe(common_brands)
     
     # Calculate the sum of NetBillableMsgs for each case
+    last_month_sum = last_month_df['NetBillableMsgs'].sum()
+    curr_month_sum = curr_month_df['NetBillableMsgs'].sum()
+    gained_brands_sum = gained_brands['NetBillableMsgs'].sum()
+    lost_brands_sum = lost_brands['NetBillableMsgs'].sum()
+    common_brands_sum = common_brands['NetBillableMsgs'].sum()
+    
+    # Calculate percentage growth
+    growth_percentage = ((curr_month_sum - last_month_sum) / last_month_sum) * 100 if last_month_sum != 0 else 0
+    
+    # Calculate composition percentages
+    common_brands_percentage = (common_brands_sum / last_month_sum) * 100 if last_month_sum != 0 else 0
+    gained_brands_percentage = (gained_brands_sum / last_month_sum) * 100 if last_month_sum != 0 else 0
+    lost_brands_percentage = (lost_brands_sum / last_month_sum) * 100 if last_month_sum != 0 else 0
+    
     summary_data = {
-        "Category": ["Last Month", "Current Month", "Gained Brands", "Lost Brands", "Common Brands"],
+        "Category": ["Last Month", "Current Month", "Gained Brands", "Lost Brands", "Common Brands", "Growth Percentage"],
         "NetBillableMsgs Sum": [
-            last_month_df['NetBillableMsgs'].sum(),
-            curr_month_df['NetBillableMsgs'].sum(),
-            gained_brands['NetBillableMsgs'].sum(),
-            lost_brands['NetBillableMsgs'].sum(),
-            common_brands['NetBillableMsgs'].sum()
+            last_month_sum,
+            curr_month_sum,
+            gained_brands_sum,
+            lost_brands_sum,
+            common_brands_sum,
+            growth_percentage
+        ],
+        "Composition Percentage": [
+            100,  # Last Month is the base
+            (curr_month_sum / last_month_sum) * 100 if last_month_sum != 0 else 0,
+            gained_brands_percentage,
+            lost_brands_percentage,
+            common_brands_percentage,
+            growth_percentage
         ]
     }
     summary_df = pd.DataFrame(summary_data)
@@ -88,15 +111,3 @@ if last_month_file and curr_month_file:
 else:
     st.write("Please upload both the Last Month and Current Month Excel files.")
 
-# Function to push changes to GitHub
-def push_to_github():
-    repo = git.Repo(os.getcwd())
-    repo.git.add(A=True)
-    repo.index.commit("Update Streamlit app")
-    origin = repo.remote(name='origin')
-    origin.push()
-
-# Button to push changes to GitHub and deploy
-if st.button('Deploy to Streamlit Cloud'):
-    push_to_github()
-    st.success("Changes pushed to GitHub. Please visit Streamlit Cloud to deploy the app.")
