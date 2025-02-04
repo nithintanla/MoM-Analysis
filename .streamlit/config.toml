@@ -1,5 +1,5 @@
 [server]
 headless = true
-port = "8000"  # Replace "8000" with the actual port number if running locally
+port = 8501
 enableCORS = false
 
