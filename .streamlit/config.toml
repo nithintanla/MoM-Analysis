@@ -53,7 +53,7 @@ You can create a `.streamlit/config.toml` file to customize the Streamlit app se
 ```toml
 [server]
 headless = true
-port = "PORT"
+port = "8000"  # Replace "PORT" with the actual port number if running locally
 enableCORS = false
 ```
 Ensure the `.streamlit/config.toml` file is properly configured for deployment.
