@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import git
+import os
 
 # Set the page layout to wide
 st.set_page_config(layout="wide")
@@ -85,3 +87,16 @@ if last_month_file and curr_month_file:
     st.dataframe(summary_df)
 else:
     st.write("Please upload both the Last Month and Current Month Excel files.")
+
+# Function to push changes to GitHub
+def push_to_github():
+    repo = git.Repo(os.getcwd())
+    repo.git.add(A=True)
+    repo.index.commit("Update Streamlit app")
+    origin = repo.remote(name='origin')
+    origin.push()
+
+# Button to push changes to GitHub and deploy
+if st.button('Deploy to Streamlit Cloud'):
+    push_to_github()
+    st.success("Changes pushed to GitHub. Please visit Streamlit Cloud to deploy the app.")

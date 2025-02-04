@@ -50,7 +50,10 @@ Sure, I'll guide you through the steps to push your project to GitHub and deploy
 
 You can create a `.streamlit/config.toml` file to customize the Streamlit app settings.
 
+```toml
 [server]
 headless = true
 port = "PORT"
 enableCORS = false
+```
+Ensure the `.streamlit/config.toml` file is properly configured for deployment.
