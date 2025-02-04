@@ -52,5 +52,5 @@ You can create a `.streamlit/config.toml` file to customize the Streamlit app se
 
 [server]
 headless = true
-port = $PORT
+port = "PORT"
 enableCORS = false
