@@ -4,7 +4,17 @@ import pandas as pd
 # Set the page layout to wide
 st.set_page_config(layout="wide")
 
-st.title('Excel Files Analysis App')
+st.title('MoM Analysis of Brands')
+
+# Information on how to use the app
+st.subheader("How to use?")
+st.markdown("""
+1. Please go to the admin portal and download 2 files:
+   - Brand wise volume data for promotional message type (select last month dates)
+   - Brand wise volume data for promotional message type (select current month dates)
+2. Upload the files below respectively.
+3. Choose the aggregator you want to see analytics for.
+""")
 
 # Upload last month Excel file
 last_month_file = st.file_uploader("Choose Last Month Excel file", type=["xlsx"], key="last_month")
